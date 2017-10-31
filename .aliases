@@ -9,6 +9,8 @@ b:
   command: bundle
 be:
   command: bundle exec
+titleize:
+  command: sed 's/[^ _-]*/\u&/g'
 c:
   command: clear
 "cat-lines":
