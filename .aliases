@@ -7,10 +7,10 @@ a:
   command: aliases
 b:
   command: bundle
+bar:
+  command: echo "hello from your home"
 be:
   command: bundle exec
-titleize:
-  command: sed 's/[^ _-]*/\u&/g'
 c:
   command: clear
 "cat-lines":
@@ -47,8 +47,6 @@ ff:
   command: "find . -mmin -60"
 first:
   command: "head -n 1"
-bar:
-  command: echo "hello from your home"
 foobar:
   command: "read piped_input; bash -c \\\"$0\" $piped_input"
 fuzzhi:
@@ -79,6 +77,8 @@ gdc:
   command: "git show --name-only"
 "git-undo-last-commit":
   command: "git reset --soft HEAD~"
+"git-log-commits-diff-master":
+  command: "git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative master..$(cwb)"
 gl:
   command: "git log --pretty=oneline -n 20 --graph --abbrev-commit"
 gp:
@@ -95,6 +95,10 @@ grab:
   command: "awk -v position=$0 '{print $position}'"
 gs:
   command: "git status -sb"
+irb:
+  command: "docker run -ti -v ${PWD}:/code ruby:alpine irb"
+kubectl:
+  command: "docker run --rm -ti -v ~/.kube:/root/.kube -e AWS_DEFAULT_REGION -e AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID sebglazebrook/kubectl ./kubectl"
 kumo:
   command: /Users/sebastianglazebrook/src/kumo/bin/kumo
 l:
@@ -115,12 +119,18 @@ mux:
   command: "tmux -2"
 n:
   command: v
+node:
+  command: "docker run -ti -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) node:latest"
+npm:
+  command: "docker run -ti -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) node:latest npm"
 pasta:
   command: git checkout master
 rainbow:
   command: "for i in {0..255};do echo  \"$(tput setaf $i)RAINBOW! $i\" ;done"
 "reset-colors":
   command: tput sgr0
+ruby:
+  command: "docker run -it -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) ruby:alpine"
 rusti:
   command: "docker-use-local && docker run -ti rusti"
 second:
@@ -129,10 +139,16 @@ second:
   command: tput setaf 2
 "set-term-colors":
   command: "reset-colors"
+spacemacs:
+  command: "docker run -ti --rm --name spacemacs -e DISPLAY=\"unix$DISPLAY\" -e UNAME=\"spacemacser\" -e UID=\"1000\" -e TZ=$(cat /etc/timezone) -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v /etc/localtime:/etc/localtime:ro -v /etc/machine-id:/etc/machine-id:ro  -v /var/run/dbus:/var/run/dbus  -v ${PWD}:/mnt/workspace spacemacs/emacs25:develop"
+split:
+  command: "tmux split-window"
+sqlectron:
+  command: "docker run -ti -v ~/.sqlectron.json:/root/.sqlectron.json sebglazebrook/sqlectron sh"
 "ssh-prod-rabbit":
   command: "ssh deploy@ec2-54-166-249-56.compute-1.amazonaws.com"
-split:
-  command: tmux split-window
+titleize:
+  command: "sed 's/[^ _-]*/\\u&/g'"
 untar:
   command: tar xvf
 v:
@@ -140,22 +156,10 @@ v:
 "vim-replace":
   command: "ag -l \"$0\" && vim -c \"bufdo %s/$0/$1/gc\" $(ag -l \"$0\")"
 vsplit:
-  command: tmux split-window -h
+  command: "tmux split-window -h"
 which:
   command: "type -p"
+yarn:
+  command: "docker run -ti -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) kkarczmarczyk/node-yarn yarn"
 yelp:
   command: "aliases list --directory ${PWD}"
-sqlectron:
-  command: "docker run -ti -v ~/.sqlectron.json:/root/.sqlectron.json sebglazebrook/sqlectron sh"
-irb:
-  command: "docker run -ti -v ${PWD}:/code ruby:alpine irb"
-kubectl:
-  command: "docker run --rm -ti -v ~/.kube:/root/.kube -e AWS_DEFAULT_REGION -e AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID sebglazebrook/kubectl ./kubectl"
-spacemacs:
-  command: 'docker run -ti --rm --name spacemacs -e DISPLAY="unix$DISPLAY" -e UNAME="spacemacser" -e UID="1000" -e TZ=$(cat /etc/timezone) -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v /etc/localtime:/etc/localtime:ro -v /etc/machine-id:/etc/machine-id:ro  -v /var/run/dbus:/var/run/dbus  -v ${PWD}:/mnt/workspace spacemacs/emacs25:develop'
-ruby:
-  command: docker run -it -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) ruby:alpine
-node:
-  command: docker run -ti -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) node:latest
-npm:
-  command: docker run -ti -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) node:latest npm
