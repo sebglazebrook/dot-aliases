@@ -46,7 +46,7 @@ ff:
 "find-modified-last-hour":
   command: "find . -mmin -60"
 first:
-  command: "head -n 1"
+  command: 'head -n $(if [ $0 = "bash" ]; then echo 1; else echo $0; fi)'
 foobar:
   command: "read piped_input; bash -c \\\"$0\" $piped_input"
 fuzzhi:
@@ -106,7 +106,7 @@ l:
 la:
   command: "command -p ls"
 last:
-  command: "tail -n 1"
+  command: 'tail -n $(if [ $0 = "bash" ]; then echo 1; else echo $0; fi)'
 ll:
   command: "ls -la"
 ln:
@@ -149,6 +149,8 @@ sqlectron:
   command: "ssh deploy@ec2-54-166-249-56.compute-1.amazonaws.com"
 titleize:
   command: "sed 's/[^ _-]*/\\u&/g'"
+take:
+  command: "tail -n +$0 | head -n 1"
 untar:
   command: tar xvf
 v:
