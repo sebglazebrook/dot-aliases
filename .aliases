@@ -163,3 +163,5 @@ yarn:
   command: "docker run -ti -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) kkarczmarczyk/node-yarn yarn"
 yelp:
   command: "aliases list --directory ${PWD}"
+todos-on-branch:
+ command: git status --short | awk '{ print $2 }' | xargs rg -A 5 -B 5 TODO
