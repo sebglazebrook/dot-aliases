@@ -79,6 +79,8 @@ gdc:
   command: "git reset --soft HEAD~"
 "git-log-commits-diff-master":
   command: "git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative master..$(cwb)"
+git-diff-merged:
+  command: "git show $0 | grep 'Merge:' | awk 'BEGIN { ORS=\" \"  }; {print $2; print $3}' | xargs git diff"
 gl:
   command: "git log --pretty=oneline -n 20 --graph --abbrev-commit"
 gp:
