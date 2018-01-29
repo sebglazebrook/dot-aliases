@@ -25,6 +25,8 @@ cwd:
   command: "pwd | tr -d \"\\r\\n\" | pbcopy"
 d:
   command: docker
+diff:
+  command: git diff --no-index --color-words
 dc:
   command: "docker-compose"
 dm:
@@ -49,6 +51,8 @@ first:
   command: 'head -n $(if [ $0 = "bash" ]; then echo 1; else echo $0; fi)'
 foobar:
   command: "read piped_input; bash -c \\\"$0\" $piped_input"
+fs:
+  command: "du -sbh .[^.]* *"
 fuzzhi:
   command: "arg=$(fzf) && $0 $arg && history -s $0 $arg && history -w ~/.bash_history"
 g:
@@ -81,6 +85,10 @@ gdc:
   command: "git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative master..$(cwb)"
 git-diff-merged:
   command: "git show $0 | grep 'Merge:' | awk 'BEGIN { ORS=\" \"  }; {print $2; print $3}' | xargs git diff"
+git-fetch:
+  command: "git fetch --all --prune"
+git-diff-branch:
+  command: "git diff $(git log master | first | grab 2) $(git log | first | grab 2)"
 gl:
   command: "git log --pretty=oneline -n 20 --graph --abbrev-commit"
 gp:
@@ -104,19 +112,15 @@ kubectl:
 kumo:
   command: /Users/sebastianglazebrook/src/kumo/bin/kumo
 l:
-  command: "command -p ls"
-la:
-  command: "command -p ls"
+  command: "ls"
 last:
   command: 'tail -n $(if [ $0 = "bash" ]; then echo 1; else echo $0; fi)'
 ll:
-  command: "ls -la"
+  command: "ls -lah"
 ln:
   command: "command -p ln -i"
-ls:
-  command: "command -p ls"
-lsd:
-  command: "command -p ls"
+mkd:
+  command: mkdir -p "$@" && cd "$@"
 mux:
   command: "tmux -2"
 n:
@@ -153,6 +157,8 @@ titleize:
   command: "sed 's/[^ _-]*/\\u&/g'"
 take:
   command: "tail -n +$0 | head -n 1"
+targz:
+  command: tar -cvf --exclude=".DS_Store" $0
 untar:
   command: tar xvf
 v:
