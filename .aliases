@@ -131,7 +131,13 @@ npm:
   command: "docker run -ti -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) node:latest npm"
 pasta:
   command: git checkout master
-rainbow:
+pkill:
+  command: ps -ef | grep $0 | first | grab 2 | xargs kill
+port-scan-address:
+  command: nmap $0
+process-listing-on-port:
+  command: sudo netstat -ltnp | grep -w  ":$0"
+rainow:
   command: "for i in {0..255};do echo  \"$(tput setaf $i)RAINBOW! $i\" ;done"
 "reset-colors":
   command: tput sgr0
