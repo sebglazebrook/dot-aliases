@@ -15,6 +15,8 @@ c:
   command: clear
 "cat-lines":
   command: "paste -d\" \""
+cargo-docker:
+  command: "docker run -ti -v ${PWD}:/code -w /code -P -e USER=${USER}  -u $(id -u):$(id -g) sebglazebrook/rust-stable:latest cargo"
 cp:
   command: "command -p cp -i"
 ctop:
@@ -145,6 +147,8 @@ ruby:
   command: "docker run -it -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) ruby:alpine"
 rusti:
   command: "docker-use-local && docker run -ti rusti"
+reverse-dns-lookup:
+  command: "dig -x"
 second:
   command: "tail -n +2 | head -n 1"
 "set-green-text":
