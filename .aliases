@@ -23,6 +23,7 @@ ctop:
   command: "docker run -ti --name ctop --rm -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest"
 cwb:
   command: "git branch | grep \"*\" | awk '{print $2}'"
+  quiet: true
 cwd:
   command: "pwd | tr -d \"\\r\\n\" | pbcopy"
 d:
@@ -95,6 +96,8 @@ gl:
   command: "git log --pretty=oneline -n 20 --graph --abbrev-commit"
 gp:
   command: git push
+  backout_seconds: 2
+  quiet: true
 gpf:
   command: "git push --force-with-lease"
 gpl:
@@ -137,6 +140,8 @@ pkill:
   command: ps -ef | grep $0 | first | grab 2 | xargs kill
 port-scan-address:
   command: nmap $0
+port-process-list:
+  command: netstat -tulpn
 process-listening-on-port:
   command: sudo lsof -i :$0
 rainow:
@@ -155,14 +160,14 @@ second:
   command: tput setaf 2
 "set-term-colors":
   command: "reset-colors"
+subscribe:
+  command: "cd /tmp/data && logs $0 | $1"
 spacemacs:
   command: "docker run -ti --rm --name spacemacs -e DISPLAY=\"unix$DISPLAY\" -e UNAME=\"spacemacser\" -e UID=\"1000\" -e TZ=$(cat /etc/timezone) -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v /etc/localtime:/etc/localtime:ro -v /etc/machine-id:/etc/machine-id:ro  -v /var/run/dbus:/var/run/dbus  -v ${PWD}:/mnt/workspace spacemacs/emacs25:develop"
 split:
   command: "tmux split-window"
 sqlectron:
   command: "docker run -ti -v ~/.sqlectron.json:/root/.sqlectron.json sebglazebrook/sqlectron sh"
-"ssh-prod-rabbit":
-  command: "ssh deploy@ec2-54-166-249-56.compute-1.amazonaws.com"
 titleize:
   command: "sed 's/[^ _-]*/\\u&/g'"
 take:
@@ -179,9 +184,15 @@ vsplit:
   command: "tmux split-window -h"
 which:
   command: "type -p"
+watch-dir:
+  command: "while inotifywait --exclude .swp --exclude .git -e modify -r .; do $@ ; done;"
 yarn:
   command: "docker run -ti -v ${PWD}:/code -w /code -P -u $(id -u):$(id -g) kkarczmarczyk/node-yarn yarn"
 yelp:
   command: "aliases list --directory ${PWD}"
 todos-on-branch:
- command: git status --short | awk '{ print $2 }' | xargs rg -A 5 -B 5 TODO
+  command: git status --short | awk '{ print $2 }' | xargs rg -A 5 -B 5 TODO
+vtop:
+  command: docker run -it --rm --pid host hvindin/centos7-vtop
+htop:
+  command: docker run -it --pid=host jonbaldie/htop
