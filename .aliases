@@ -92,8 +92,18 @@ git-fetch:
   command: "git fetch --all --prune"
 git-diff-branch:
   command: "git diff $(git log master | first | grab 2) $(git log | first | grab 2)"
+git-stash-preview:
+  command: "git stash "
+git-clean-origin:
+  command: "git remote prune origin"
+git-first-commit-on-branch:
+  command: "git log master..$(cwb) --pretty=%H | last"
+git-first-commit-off-branch:
+  command: "git log --max-count 1 --pretty=%H $(git-first-commit-on-branch)^1"
+git-rebase-branch:
+  command: "git rebase -i $(git-first-commit-off-branch)"
 gl:
-  command: "git log --pretty=oneline -n 20 --graph --abbrev-commit"
+  command: "git log --pretty=oneline --max-count 20 --graph --abbrev-commit"
 gp:
   command: git push
   backout_seconds: 2
