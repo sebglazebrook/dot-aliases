@@ -71,7 +71,7 @@ gd:
 gdc:
   command: "git diff --cached"
 "git-delete-merged":
-  command: "git branch --merged | grep -v \"\\*\" | grep -v master | xargs -n 1 git branch -d"
+  command: "git branch --merged | grep -v \"\\*\" | grep -v master | xargs --no-run-if-empty -n 1 git branch -d"
 "git-find-commit-containing-text":
   command: "git log -G $0"
 "git-find-commit-message-containing":
